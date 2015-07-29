@@ -12,7 +12,10 @@
         }
     ],
     "minimum-stability": "stable",
-    "require": {},
+    "require": {
+      "doctrine/inflector": "~1.0",
+      "prometheusapi/utilities": "dev-master"
+    },
     "autoload": {
         "psr-4": {
             "LaraPackage\\RandomId\\": "src/"
