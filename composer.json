@@ -15,7 +15,7 @@
     "require": {
       "doctrine/inflector": "~1.0",
       "laravel/framework": "~5.1",
-      "prometheusapi/utilities": "dev-master"
+      "prometheusapi/utilities": "~0.0.1"
     },
     "autoload": {
         "psr-4": {
