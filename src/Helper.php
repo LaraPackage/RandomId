@@ -1,8 +1,7 @@
 <?php
 namespace LaraPackage\RandomId;
 
-use App\Contracts\Config\ApiVersion;
-use App\Contracts\Uri\Parser as UriParser;
+use PrometheusApi\Utilities\Contracts\Uri\Parser as UriParser;
 
 class Helper implements Contracts\Helper
 {
@@ -17,24 +16,16 @@ class Helper implements Contracts\Helper
     protected $idRetriever;
 
     /**
-     * @var ApiVersion
-     */
-    protected $config;
-
-    /**
      * @param UriParser $uriParser
      * @param \LaraPackage\RandomId\Contracts\Retriever $idRetriever
-     * @param ApiVersion                  $config
      */
     public function __construct(
         UriParser $uriParser,
-        Contracts\Retriever $idRetriever,
-        ApiVersion $config
+        Contracts\Retriever $idRetriever
     )
     {
         $this->uriParser = $uriParser;
         $this->idRetriever = $idRetriever;
-        $this->config = $config;
     }
 
     /**
@@ -95,11 +86,13 @@ class Helper implements Contracts\Helper
     /**
      * @inheritdoc
      */
-    public function getRandomIdsForUri($uri, $version, $idPlaceholder = '{random_id}')
+    public function getRandomIdsForUri($uri, \Closure $idOverride = null, $idPlaceholder = '{random_id}')
     {
-        $idMap = $this->config->resourceIdMap($uri, $version);
-        if ($idMap) {
-            return $idMap;
+        if ($idOverride) {
+            $idMap = $idOverride($uri, $idPlaceholder);
+            if ($idMap) {
+                return $idMap;
+            }
         }
 
         return $this->idRetriever->getRandomIds(

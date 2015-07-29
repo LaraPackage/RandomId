@@ -2,9 +2,6 @@
 
 namespace LaraPackage\RandomId;
 
-use App\Contracts;
-use LaraPackage\RandomId\TableHelper;
-
 class Retriever implements \LaraPackage\RandomId\Contracts\Retriever
 {
     /**

@@ -36,13 +36,13 @@ interface Helper
     /**
      * Gets random ids for $uri using $idPlaceholder; random ids derived from the URI entities
      *
-     * @param string $uri
-     * @param int    $version
-     * @param string $idPlaceholder
+     * @param string   $uri
+     * @param \Closure $idOverride
+     * @param string   $idPlaceholder
      *
      * @return array|false
      */
-    public function getRandomIdsForUri($uri, $version, $idPlaceholder = '{random_id}');
+    public function getRandomIdsForUri($uri, \Closure $idOverride = null, $idPlaceholder = '{random_id}');
 
     /**
      * Takes $ids and replaces $randomIdString sequentially with them in the $payload
