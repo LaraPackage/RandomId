@@ -1,0 +1,16 @@
+{
+    "name": "larapackage/random_id",
+    "description": "A package to help retrieve random ids for testing and other purposes",
+    "require-dev": {
+        "phpspec/phpspec": "^2.2"
+    },
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Andy Wendt",
+            "email": "andy@awendt.com"
+        }
+    ],
+    "minimum-stability": "stable",
+    "require": {}
+}
