@@ -1,5 +1,5 @@
 {
-    "name": "larapackage/random_id",
+    "name": "larapackage/randomid",
     "description": "A package to help retrieve random ids for testing and other purposes",
     "require-dev": {
         "phpspec/phpspec": "^2.2"
