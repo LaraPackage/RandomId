@@ -104,6 +104,29 @@ class Helper implements Contracts\Helper
     /**
      * @inheritdoc
      */
+    public function putDataInQueryString($queryString, array $data)
+    {
+        $returnQueries = [];
+
+        $queries = explode('&', $queryString);
+
+        foreach ($queries as $query) {
+            $queryArray = explode('=', $query);
+            $key = $queryArray[0];
+            $placeHolder = $queryArray[1];
+
+            $valueKey = str_replace(['{', '}'], ['', ''], $placeHolder);
+            $value = $data[$valueKey];
+
+            $returnQueries[] = $key.'='.$value;
+        }
+
+        return implode('&', $returnQueries);
+    }
+
+    /**
+     * @inheritdoc
+     */
     public function putIdsInPayload($payload, array $ids, $randomIdString = '"{random_id}"')
     {
         return str_replace_array($randomIdString, $ids, $payload);

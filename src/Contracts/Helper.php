@@ -45,6 +45,16 @@ interface Helper
     public function getRandomIdsForUri($uri, \Closure $idOverride = null, $idPlaceholder = '{random_id}');
 
     /**
+     * Replaces placeholders in query string with values from data
+     *
+     * @param string $queryString
+     * @param array $data assoc array; the placeholders are used to pull values from here
+     *
+     * @return string  the new query string
+     */
+    public function putDataInQueryString($queryString, array $data);
+
+    /**
      * Takes $ids and replaces $randomIdString sequentially with them in the $payload
      *
      * @param string $payload

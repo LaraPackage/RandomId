@@ -74,6 +74,15 @@ class HelperSpec extends ObjectBehavior
         $this->shouldHaveType('LaraPackage\RandomId\Helper');
     }
 
+    function it_puts_data_in_a_query_string()
+    {
+        $queryString = 'foo={bar}&baz={sugar}';
+        $data = ['bar' => 2, 'useless' => 8, 'sugar' => 9];
+        $expected = 'foo=2&baz=9';
+
+        $this->putDataInQueryString($queryString, $data)->shouldReturn($expected);
+    }
+
     function it_puts_random_ids_into_the_payload()
     {
         $ids = [1, 2];
