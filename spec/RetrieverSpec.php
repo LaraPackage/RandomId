@@ -57,7 +57,7 @@ class RetrieverSpec extends ObjectBehavior
 
     function it_is_initializable()
     {
-        $this->shouldHaveType('LaraPackage\IdRetriever\Retriever');
+        $this->shouldHaveType('LaraPackage\RandomId\Retriever');
     }
 
     function it_returns_an_empty_array_if_no_entities_needed_ids()

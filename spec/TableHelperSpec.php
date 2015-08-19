@@ -21,7 +21,7 @@ class TableHelperSpec extends ObjectBehavior
 
     function it_is_initializable()
     {
-        $this->shouldHaveType('LaraPackage\IdRetriever\TableHelper');
+        $this->shouldHaveType('LaraPackage\RandomId\TableHelper');
     }
 
     function it_makes_a_column_name()

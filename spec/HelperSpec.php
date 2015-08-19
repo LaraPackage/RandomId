@@ -2,20 +2,23 @@
 
 namespace spec\LaraPackage\RandomId;
 
-use LaraPackage\RandomId\Contracts\Retriever;
-use App\Contracts\Uri\Parser;
 use PhpSpec\ObjectBehavior;
+use PrometheusApi\Utilities\Contracts\Uri\Parser;
 use Prophecy\Argument;
 
 class HelperSpec extends ObjectBehavior
 {
-    function it_gets_random_id_using_config(\App\Contracts\Config\ApiVersion $config)
+    function it_gets_random_id_using_an_override()
     {
         $resource = '/attributes/{random_id}';
-        $version = 4;
-        $return = [8];
-        $this->configExpectation($config, $resource, 4, $return);
-        $this->getRandomIdsForUri($resource, $version)->shouldReturn($return);
+        $id = 8;
+        $return = [$id];
+        $idOverrideClosure = function ($uri, $idPlaceholder) use ($resource, $id) {
+            return [$id];
+        };
+
+
+        $this->getRandomIdsForUri($resource, $idOverrideClosure)->shouldReturn($return);
     }
 
     function it_gets_random_ids_for_a_resource(Parser $parser, \LaraPackage\RandomId\Contracts\Retriever $idRetriever)
@@ -30,7 +33,7 @@ class HelperSpec extends ObjectBehavior
         $parser->idEntities($resource, $idPlaceholder)->shouldBeCalled()->willReturn($idEntities);
         $parser->entities($resource, $idPlaceholder)->shouldBeCalled()->willReturn($entities);
         $idRetriever->getRandomIds($entities, $idEntities)->shouldBeCalled()->willReturn($expected);
-        $this->getRandomIdsForUri($resource, 4)->shouldReturn($expected);
+        $this->getRandomIdsForUri($resource)->shouldReturn($expected);
     }
 
     function it_gets_random_ids_for_the_last_entity(Parser $parser, \LaraPackage\RandomId\Contracts\Retriever $idRetriever)
@@ -68,7 +71,7 @@ class HelperSpec extends ObjectBehavior
 
     function it_is_initializable()
     {
-        $this->shouldHaveType('LaraPackage\IdRetriever\Helper');
+        $this->shouldHaveType('LaraPackage\RandomId\Helper');
     }
 
     function it_puts_random_ids_into_the_payload()
@@ -90,13 +93,8 @@ class HelperSpec extends ObjectBehavior
         $this->putIdsInUri($resource, $ids)->shouldReturn($expected);
     }
 
-    function let(Parser $parser, \LaraPackage\RandomId\Contracts\Retriever $idRetriever, \App\Contracts\Config\ApiVersion $config)
+    function let(Parser $parser, \LaraPackage\RandomId\Contracts\Retriever $idRetriever)
     {
-        $this->beConstructedWith($parser, $idRetriever, $config);
-    }
-
-    protected function configExpectation(\App\Contracts\Config\ApiVersion $config, $resource, $version, $return)
-    {
-        $config->resourceIdMap($resource, $version)->shouldBeCalled()->willReturn($return);
+        $this->beConstructedWith($parser, $idRetriever);
     }
 }
